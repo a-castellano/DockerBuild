@@ -1,4 +1,4 @@
-#!/bin/bash - 
+#!/bin/bash -
 #===============================================================================
 #
 #          FILE: build_docker_image__functions
@@ -16,8 +16,6 @@
 #       CREATED: 04/24/2019 06:59
 #      REVISION: 0.1
 #===============================================================================
-
-set -o nounset                              # Treat unset variables as an error
 
 # Functions
 

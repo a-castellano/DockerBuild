@@ -1,0 +1,15 @@
+stages:
+    - linter
+    - test
+
+linter:
+    image: daedalusproject/base_bash_utils:latest
+    stage: test
+    script:
+        - shellcheck lib/build_docker_image_functions.sh
+
+unit_tests:
+    image: daedalusproject/base_bash_utils:latest
+    stage: test
+    script:
+        - make test
