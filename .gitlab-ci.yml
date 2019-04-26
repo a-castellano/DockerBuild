@@ -17,7 +17,7 @@ unit_tests:
 
 cover:
     image: daedalusproject/base_bash_utils:latest
-    stage: cover
+    stage: coverage
     script:
         - make cover
     artifacts:
