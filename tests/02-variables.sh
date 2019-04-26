@@ -60,5 +60,51 @@ testWithDOCKER_IMAGES_MAINTAINER() {
     assertEquals "Docker hub organization name not provided." "$check_variables_message"
 }
 
+testWithoutDOCKERHUBUSER() {
+    DOCKER_ORGANIZATION_NAME="daedalusproject"
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "1" "$check_variables_status"
+    assertEquals "Docker hub user not provided." "$check_variables_message"
+}
+
+testWithoutDOCKERHUBPASSWORD() {
+    DOCKER_ORGANIZATION_NAME="daedalusproject"
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    DOCKERHUBUSER="myuser"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "1" "$check_variables_status"
+    assertEquals "Docker hub password not provided." "$check_variables_message"
+}
+
+testWithoutIMAGENAME() {
+    DOCKER_ORGANIZATION_NAME="daedalusproject"
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    DOCKERHUBUSER="myuser"
+    DOCKERHUBPASSWORD="somepassword"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "1" "$check_variables_status"
+    assertEquals "IMAGENAME env variable is not set." "$check_variables_message"
+}
+
+testAllVariablesSet() {
+    DOCKER_ORGANIZATION_NAME="daedalusproject"
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    DOCKERHUBUSER="myuser"
+    DOCKERHUBPASSWORD="somepassword"
+    IMAGENAME="SomeImage"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "0" "$check_variables_status"
+    assertEquals "" "$check_variables_message"
+}
+
 # Load shUnit2.
 . /usr/bin/shunit2
