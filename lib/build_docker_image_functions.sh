@@ -34,13 +34,14 @@ function show_error {
 function check_variables {
 
     debug "Initiating check_variables."
+
     debug "Checking Docker Organization variables."
     if [[ -z ${DOCKER_ORGANIZATION_NAME} ]]; then
         show_error "Docker hub organization name not provided."
         return 1
     fi
 
-    debug "Checking maintainer variables."
+    debug "Checking maintainer variable."
     if [[ -z ${DOCKER_IMAGES_MAINTAINER} ]]; then
         show_error "Image maintainer not provided."
         return 1
@@ -58,13 +59,21 @@ function check_variables {
         return 1
     fi
 
-    debug "Checking IMAGE variables."
+    debug "Checking IMAGENAME variable."
     if  [[ -z $IMAGENAME ]]; then
 
         show_error "IMAGENAME env variable is not set."
         return 1
     fi
+
+    debug "Checking BUILD_PATH variable."
+    if  [[ -z $BUILD_PATH ]]; then
+
+        BUILD_PATH="."
+    fi
     return 0
+
+
 }
 
 function setup {

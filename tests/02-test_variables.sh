@@ -23,6 +23,7 @@ tearDown() {
     unset DOCKERHUBUSER
     unset DOCKERHUBPASSWORD
     unset IMAGENAME
+    unset BUILD_PATH
 }
 
 testNoVariables() {
@@ -105,6 +106,34 @@ testAllVariablesSet() {
     assertEquals "0" "$check_variables_status"
     assertEquals "" "$check_variables_message"
 }
+
+testBUILD_PATH_unset() {
+    DOCKER_ORGANIZATION_NAME="daedalusproject"
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    DOCKERHUBUSER="myuser"
+    DOCKERHUBPASSWORD="somepassword"
+    IMAGENAME="SomeImage"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "0" "$check_variables_status"
+    assertEquals "." "$BUILD_PATH"
+}
+
+testBUILD_PATH_set() {
+    DOCKER_ORGANIZATION_NAME="daedalusproject"
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    DOCKERHUBUSER="myuser"
+    DOCKERHUBPASSWORD="somepassword"
+    IMAGENAME="SomeImage"
+    BUILD_PATH="path"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "0" "$check_variables_status"
+    assertEquals "path" "$BUILD_PATH"
+}
+
 
 # Load shUnit2.
 . /usr/bin/shunit2
