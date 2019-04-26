@@ -1,7 +1,7 @@
 #!/bin/bash -
 #===============================================================================
 #
-#          FILE: 01-debug.sh
+#          FILE: 01-test_debug.sh
 #
 #   DESCRIPTION: Test debug
 

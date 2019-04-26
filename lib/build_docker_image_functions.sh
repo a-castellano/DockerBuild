@@ -83,9 +83,9 @@ function setup {
     if  [[ $IS_BASE_IMAGE == 1 ]]; then
 
         debug "Current image is a base image type."
-        mkdir -p timestamp
+        mkdir -p $BUILD_PATH/timestamp
         DATESTRING=$(date +%Y%m%d%H%M)
-        echo "$DATESTRING" > timestamp/timestampfile
+        echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
     else
         debug "Current image is not a base image type."
         DATESTRING=$(cat timestamp/timestampfile)

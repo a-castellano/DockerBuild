@@ -16,6 +16,8 @@ test:
 	( $(TEST_DIR)/01-test_debug.sh )
 	@echo "- variables"
 	( $(TEST_DIR)/02-test_variables.sh )
+	@echo "- setup"
+	( $(TEST_DIR)/03-test_setup.sh )
 
 cover:
 	./get_coverage tests

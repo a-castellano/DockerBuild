@@ -1,7 +1,7 @@
 #!/bin/bash -
 #===============================================================================
 #
-#          FILE: 01-variables.sh
+#          FILE: 02-test_variables.sh
 #
 #   DESCRIPTION: Test varaible parsing
 
