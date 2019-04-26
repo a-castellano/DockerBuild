@@ -17,7 +17,7 @@ oneTimeSetUp() {
     mkdir -p $TMP_FOLDER
 }
 
-TearDown() {
+tearDown() {
     unset DOCKER_ORGANIZATION_NAME
     unset DOCKER_IMAGES_MAINTAINER
     unset DOCKERHUBUSER
@@ -49,6 +49,15 @@ testWithDOCKER_ORGANIZATION_NAME() {
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
     assertEquals "1" "$check_variables_status"
     assertEquals "Image maintainer not provided." "$check_variables_message"
+}
+
+testWithDOCKER_IMAGES_MAINTAINER() {
+    DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
+    check_variables 2> $TMP_FOLDER/testNoVariables
+    check_variables_status=$?
+    check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
+    assertEquals "1" "$check_variables_status"
+    assertEquals "Docker hub organization name not provided." "$check_variables_message"
 }
 
 # Load shUnit2.

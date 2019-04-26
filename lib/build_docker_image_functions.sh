@@ -42,7 +42,7 @@ function check_variables {
 
     debug "Checking maintainer variables."
     if [[ -z ${DOCKER_IMAGES_MAINTAINER} ]]; then
-        show_error "Docker hub organization name not provided."
+        show_error "Image maintainer not provided."
         return 1
     fi
 
