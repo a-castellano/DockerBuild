@@ -20,7 +20,7 @@ cover:
     stage: cover
     script:
         - make cover
-   artifacts:
+    artifacts:
         paths:
         - coverage
         expire_in: 15 minutes
