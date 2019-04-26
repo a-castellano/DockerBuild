@@ -20,6 +20,7 @@ cover:
     stage: coverage
     script:
         - make cover
+    coverage: /Coverage: (\d+\.\d+?)%$/
     artifacts:
         paths:
         - coverage
