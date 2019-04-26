@@ -17,6 +17,10 @@ test:
 	@echo "- variables"
 	( $(TEST_DIR)/02-variables.sh )
 
+cover:
+	./get_coverage tests
+
+
 build:
 	( cp -R lib clean_lib )
 

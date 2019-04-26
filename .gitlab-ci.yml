@@ -1,6 +1,7 @@
 stages:
     - linter
     - test
+    - coverage
 
 linter:
     image: daedalusproject/base_bash_utils:latest
@@ -13,3 +14,13 @@ unit_tests:
     stage: test
     script:
         - make test
+
+cover:
+    image: daedalusproject/base_bash_utils:latest
+    stage: cover
+    script:
+        - make cover
+   artifacts:
+        paths:
+        - coverage
+        expire_in: 15 minutes
