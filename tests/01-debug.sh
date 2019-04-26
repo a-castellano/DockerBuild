@@ -23,8 +23,9 @@ testDebugNoMessage() {
 
 testDebugWithMessage() {
     DEBUG=1
-    menssage=$(debug "This is a test")
-    assertSame "$menssage" "This is a test" #If debug options is not enabled no message is printed
+    expectedMessage="This is a test"
+    menssage=$(debug "$expectedMessage")
+    assertSame "$menssage" "$expectedMessage" #If debug options is  enabled message is printed
 }
 
 # Load shUnit2.

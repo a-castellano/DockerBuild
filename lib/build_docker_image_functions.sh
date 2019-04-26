@@ -22,7 +22,7 @@
 function debug {
 
     if [ -n "$DEBUG" ]; then
-        echo $?
+        echo "$@"
     fi
 }
 
