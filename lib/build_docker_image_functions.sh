@@ -29,7 +29,6 @@ function debug {
 function show_error {
 
     echo "$@" 1>&2
-    exit 1
 }
 
 function check_variables {
@@ -38,28 +37,34 @@ function check_variables {
     debug "Checking Docker Organization variables."
     if [[ -z ${DOCKER_ORGANIZATION_NAME} ]]; then
         show_error "Docker hub organization name not provided."
+        return 1
     fi
 
     debug "Checking maintainer variables."
     if [[ -z ${DOCKER_IMAGES_MAINTAINER} ]]; then
         show_error "Docker hub organization name not provided."
+        return 1
     fi
 
     debug "Checking Docker login variables."
 
     if [[ -z ${DOCKERHUBUSER} ]]; then
         show_error "Docker hub user not provided."
+        return 1
     fi
 
     if [[ -z ${DOCKERHUBPASSWORD} ]]; then
         show_error "Docker hub password not provided."
+        return 1
     fi
 
     debug "Checking IMAGE variables."
     if  [[ -z $IMAGENAME ]]; then
 
         show_error "IMAGENAME env variable is not set."
+        return 1
     fi
+    return 0
 }
 
 function setup {

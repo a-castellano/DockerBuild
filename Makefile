@@ -14,6 +14,8 @@ test:
 	@echo "executing $(PROG) unit tests"
 	@echo "- debug"
 	( $(TEST_DIR)/01-debug.sh )
+	@echo "- variables"
+	( $(TEST_DIR)/02-variables.sh )
 
 build:
 	( cp -R lib clean_lib )

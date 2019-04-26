@@ -18,14 +18,14 @@ TearDown() {
 
 testDebugNoMessage() {
     no_menssage=$(debug "This is a test")
-    assertEquals "$no_menssage" "" #If debug options is not enabled no message is printed
+    assertEquals "" "$no_menssage" #If debug options is not enabled no message is printed
 }
 
 testDebugWithMessage() {
     DEBUG=1
     expectedMessage="This is a test"
     menssage=$(debug "$expectedMessage")
-    assertSame "$menssage" "$expectedMessage" #If debug options is  enabled message is printed
+    assertSame "$expectedMessage" "$menssage" #If debug options is  enabled message is printed
 }
 
 # Load shUnit2.
