@@ -27,7 +27,7 @@ cover:
         - coverage
         expire_in: 15 minutes
 
-create_deb_package
+create_deb_package:
     image: daedalusproject/base_deb_builder:201904271104
     stage: package
     script:
