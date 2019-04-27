@@ -130,7 +130,7 @@ function build_image {
 
     debug docker login
     docker login --username "$DOCKERHUBUSER" --password "$DOCKERHUBPASSWORD"
-    docker build "$BUILD_OPTIONS" -t "$IMAGENAME" -f "$IMAGENAME/Dockerfile" .
+    docker build $BUILD_OPTIONS -t "$IMAGENAME" -f "$IMAGENAME/Dockerfile" .
     debug docker create --name="$IMAGENAME" -i "$IMAGENAME"
     docker create --name="$IMAGENAME" -i "$IMAGENAME"
 }

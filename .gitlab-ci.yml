@@ -8,7 +8,7 @@ linter:
     image: daedalusproject/base_bash_utils:201904271450
     stage: test
     script:
-        - shellcheck lib/build_docker_image_functions.sh
+        - shellcheck --exclude=SC2086 lib/build_docker_image_functions.sh
 
 unit_tests:
     image: daedalusproject/base_bash_utils:201904271450

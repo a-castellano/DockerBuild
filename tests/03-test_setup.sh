@@ -53,7 +53,7 @@ testIsBaseImage() {
     assertEquals "0" "$check_timestamp_folder"
     test -f $BUILD_PATH/timestamp/timestampfile
     check_timestamp_file=$?
-    assertEquals "0" "$check_timestamp_file"
+    assertEquals "0" "$check_timestamp_folder"
     assertEquals "0" "$check_timestamp_file"
     assertEquals "--network=host --no-cache" "$BUILD_OPTIONS"
     assertEquals "latest" "$LATEST_TAG_NAME"
