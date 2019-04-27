@@ -98,6 +98,19 @@ testIsuNOTBaseImageFailedToGetBaseImage() {
     #There is not dockerfile so IMAGENAME is not set
 }
 
+testCI_COMMIT_REF_NAME() {
+    CI_COMMIT_REF_NAME="master"
+    IS_BASE_IMAGE=0
+    cp -R tests/base_image_test $BUILD_PATH/
+    mkdir -p $BUILD_PATH/timestamp
+    DATESTRING=$(date +%Y%m%d%H%M)
+    echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
+    IMAGENAME="base_image_test"
+    setup
+    setupError=$?
+    assertEquals "0" "$setupError"
+}
+
 
 # Load shUnit2.
 . /usr/bin/shunit2
