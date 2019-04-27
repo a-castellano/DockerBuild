@@ -89,11 +89,11 @@ function setup {
     else
         debug "Current image is not a base image type."
         DATESTRING=$(cat $BUILD_PATH/timestamp/timestampfile)
-    if  [[ -z $DATESTRING ]]; then
+        if  [[ -z $DATESTRING ]]; then
 
-        show_error "DATESTRING env variable is not set."
-        return 1
-    fi
+            show_error "DATESTRING env variable is not set."
+            return 1
+        fi
 
         BASEIMAGE=$(grep "ARG BASE_IMAGE=" "$BUILD_PATH/${IMAGENAME}"/Dockerfile |sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
         debug "Checking if base image value is rightfully set."
