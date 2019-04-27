@@ -34,7 +34,7 @@ create_deb_package:
         - apt-get update
         - apt-get install -y shunit2
     script:
-        - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -uc -b
+        - dpkg-buildpackage -uc -b
         - mkdir package
         - mv ../daedalus-project-docker-build*.deb package/
     artifacts:
