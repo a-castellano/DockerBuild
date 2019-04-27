@@ -27,6 +27,7 @@ setUp(){
     DOCKERHUBUSER="alvaro.castellano.vela"
     DOCKERHUBPASSWORD="mypassword"
     BUILD_PATH="$TMP_FOLDER"
+    IMAGENAME="testimage"
     check_variables
 }
 
@@ -51,6 +52,7 @@ testIsBaseImage() {
     assertEquals "0" "$check_timestamp_folder"
     test -f $BUILD_PATH/timestamp/timestampfile
     check_timestamp_file=$?
+    assertEquals "0" "$check_timestamp_file"
     assertEquals "0" "$check_timestamp_file"
 }
 
