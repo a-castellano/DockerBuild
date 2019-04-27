@@ -1,3 +1,9 @@
+daedalus-project-docker-build (0.2-1) UNRELEASED; urgency=medium
+
+  * Env variable usage fixed
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 23:44:36 +0200
+
 daedalus-project-docker-build (0.1-6) UNRELEASED; urgency=medium
 
   * Docker build options have been fixed
