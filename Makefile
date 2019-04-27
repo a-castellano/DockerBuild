@@ -28,6 +28,7 @@ build:
 
 clean:
 	( rm -f $(PROG) )
+	( rm -rf coverage )
 
 install:
 	install $(PROG) $(DESTDIR)$(bindir)

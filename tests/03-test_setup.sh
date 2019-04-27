@@ -65,32 +65,39 @@ testIsuNOTBaseImageNotDateString() {
     IS_BASE_IMAGE=0
     BUILD_PATH=$(pwd)/tests
     IMAGENAME="base_image_test"
-    setup
+    setup 2> /dev/null
     setupError=$?
     assertEquals "1" "$setupError"
+    #There is not timestampfile so IMAGENAME is not set
 }
 
-#testIsuNOTBaseImageNotDateString() {
-#
-#    unset CI_COMMIT_REF_NAME
-#    IS_BASE_IMAGE=0
-#    BUILD_PATH=$(pwd)/tests
-#    IMAGENAME="base_image_test"
-#    setup
-#    setupError=$?
-#    assertEquals "0" "$setupError"
-#}
+testIsuNOTBaseImage() {
+    unset CI_COMMIT_REF_NAME
+    IS_BASE_IMAGE=0
+    cp -R tests/base_image_test $BUILD_PATH/
+    mkdir -p $BUILD_PATH/timestamp
+    DATESTRING=$(date +%Y%m%d%H%M)
+    echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
+    IMAGENAME="base_image_test"
+    setup
+    setupError=$?
+    assertEquals "0" "$setupError"
+}
 
-#testIsuNOTBaseImage() {
-#    unset CI_COMMIT_REF_NAME
-#    IS_BASE_IMAGE=0
-#    mkdir -p $BUILD_PATH/timestamp
-#    DATESTRING=$(date +%Y%m%d%H%M)
-#    echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
-#    setup
-#    setupError=$?
-#    assertEquals "1" "$setupError"
-#}
+testIsuNOTBaseImageFailedToGetBaseImage() {
+    unset CI_COMMIT_REF_NAME
+    IS_BASE_IMAGE=0
+    cp -R tests/base_image_test $BUILD_PATH/
+    mkdir -p $BUILD_PATH/timestamp
+    DATESTRING=$(date +%Y%m%d%H%M)
+    echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
+    IMAGENAME="nonexistent"
+    setup 2> /dev/null
+    setupError=$?
+    assertEquals "1" "$setupError"
+    #There is not dockerfile so IMAGENAME is not set
+}
+
 
 # Load shUnit2.
 . /usr/bin/shunit2

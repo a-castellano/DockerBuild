@@ -99,6 +99,7 @@ function setup {
         debug "Checking if base image value is rightfully set."
         if [[ "$BASEIMAGE" == "" ]]; then
             show_error "Cannot parse BASEIMAGE value."
+            return 1
         fi
     fi
 
