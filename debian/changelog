@@ -1,6 +1,13 @@
+daedalus-project-docker-build (0.1-5) UNRELEASED; urgency=medium
+
+  * New test version
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 22:50:36 +0200
+
+
 daedalus-project-docker-build (0.1-4) UNRELEASED; urgency=medium
 
-  * Add more debug messaged.
+  * Add more debug messages.
 
  -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 22:30:36 +0200
 
