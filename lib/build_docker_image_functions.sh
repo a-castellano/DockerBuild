@@ -1,4 +1,4 @@
-#!/bin/bash - 
+#!/bin/bash -
 #===============================================================================
 #
 #          FILE: build_docker_image__functions
@@ -17,51 +17,63 @@
 #      REVISION: 0.1
 #===============================================================================
 
-set -o nounset                              # Treat unset variables as an error
-
 # Functions
 
 function debug {
 
     if [ -n "$DEBUG" ]; then
-        echo $?
+        echo "$@"
     fi
 }
 
 function show_error {
 
     echo "$@" 1>&2
-    exit 1
 }
 
 function check_variables {
 
     debug "Initiating check_variables."
+
     debug "Checking Docker Organization variables."
     if [[ -z ${DOCKER_ORGANIZATION_NAME} ]]; then
         show_error "Docker hub organization name not provided."
+        return 1
     fi
 
-    debug "Checking maintainer variables."
+    debug "Checking maintainer variable."
     if [[ -z ${DOCKER_IMAGES_MAINTAINER} ]]; then
-        show_error "Docker hub organization name not provided."
+        show_error "Image maintainer not provided."
+        return 1
     fi
 
     debug "Checking Docker login variables."
 
     if [[ -z ${DOCKERHUBUSER} ]]; then
         show_error "Docker hub user not provided."
+        return 1
     fi
 
     if [[ -z ${DOCKERHUBPASSWORD} ]]; then
         show_error "Docker hub password not provided."
+        return 1
     fi
 
-    debug "Checking IMAGE variables."
+    debug "Checking IMAGENAME variable."
     if  [[ -z $IMAGENAME ]]; then
 
         show_error "IMAGENAME env variable is not set."
+        return 1
     fi
+
+    debug "Checking BUILD_PATH variable."
+    if  [[ -z $BUILD_PATH ]]; then
+
+        BUILD_PATH="."
+    fi
+    return 0
+
+
 }
 
 function setup {
@@ -71,16 +83,23 @@ function setup {
     if  [[ $IS_BASE_IMAGE == 1 ]]; then
 
         debug "Current image is a base image type."
-        mkdir -p timestamp
+        mkdir -p $BUILD_PATH/timestamp
         DATESTRING=$(date +%Y%m%d%H%M)
-        echo "$DATESTRING" > timestamp/timestampfile
+        echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
     else
         debug "Current image is not a base image type."
-        DATESTRING=$(cat timestamp/timestampfile)
-        BASEIMAGE=$(grep "ARG BASE_IMAGE=" "${IMAGENAME}"/Dockerfile |sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
+        DATESTRING=$(cat $BUILD_PATH/timestamp/timestampfile)
+    if  [[ -z $DATESTRING ]]; then
+
+        show_error "DATESTRING env variable is not set."
+        return 1
+    fi
+
+        BASEIMAGE=$(grep "ARG BASE_IMAGE=" "$BUILD_PATH/${IMAGENAME}"/Dockerfile |sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
         debug "Checking if base image value is rightfully set."
-        if [ "$BASEIMAGE" -eq "" ]; then
+        if [[ "$BASEIMAGE" == "" ]]; then
             show_error "Cannot parse BASEIMAGE value."
+            return 1
         fi
     fi
 
