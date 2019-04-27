@@ -28,11 +28,11 @@ cover:
         expire_in: 15 minutes
 
 create_deb_package:
-    image: daedalusproject/base_deb_builder:201904271104
+    image: daedalusproject/base_deb_builder:201904271450
     stage: package
     before_script:
         - apt-get update
-        - apt-get install -y debhelper shunit2
+        - apt-get install -y shunit2
     script:
         - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -uc -b
         - mkdir package
