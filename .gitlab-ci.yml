@@ -2,6 +2,7 @@ stages:
     - linter
     - test
     - coverage
+    - package
 
 linter:
     image: daedalusproject/base_bash_utils:latest
@@ -25,3 +26,16 @@ cover:
         paths:
         - coverage
         expire_in: 15 minutes
+
+create_deb_package
+    image: daedalusproject/base_deb_builder:201904271104
+    stage: package
+    script:
+        - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -uc -b
+        - mkdir package
+        - mv ../daedalus-project-docker-build*.deb package/
+    artifacts:
+        paths:
+        - package
+        expire_in: 5 minutes
+

@@ -1,0 +1,11 @@
+Source: daedalus-project-docker-build
+Maintainer: Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 0.1
+Build-Depends: debhelper (>= 9)
+
+Package: daedalus-project-docker-build
+Architecture: any
+Depends: docker-ce-cli, ${shlibs:Depends}, ${misc:Depends}
+Description: Utility to make create Daedalus Project Docker images.
