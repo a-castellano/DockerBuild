@@ -31,8 +31,8 @@ create_deb_package:
     image: daedalusproject/base_deb_builder:201904271104
     stage: package
     before_script:
-        apt-get update
-        apt-get install -y debhelper shunit2
+        - apt-get update
+        - apt-get install -y debhelper shunit2
     script:
         - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -uc -b
         - mkdir package
