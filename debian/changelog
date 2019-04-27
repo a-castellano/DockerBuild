@@ -1,9 +1,14 @@
+daedalus-project-docker-build (0.1-6) UNRELEASED; urgency=medium
+
+  * Docker build options have been fixed
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 23:14:36 +0200
+
 daedalus-project-docker-build (0.1-5) UNRELEASED; urgency=medium
 
   * New test version
 
  -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 22:50:36 +0200
-
 
 daedalus-project-docker-build (0.1-4) UNRELEASED; urgency=medium
 
