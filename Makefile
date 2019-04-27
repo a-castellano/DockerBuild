@@ -25,10 +25,16 @@ cover:
 
 build:
 	( cp -R lib clean_lib )
+	( find clean_lib -type f -exec sed -i '/^\#.*$$/d' {} \; )
+	( find clean_lib -type f -exec sed -i '/source .*$$/d' {} \; )
+	( perl -pe 's/source lib\/(.*)$$/`cat clean_lib\/$$1`/e' src/$(PROG) > $(PROG) )
+	( chmod 755 $(PROG) )
+	( rm -rf clean_lib )
 
 clean:
 	( rm -f $(PROG) )
 	( rm -rf coverage )
+	( rm -rf clean_lib )
 
 install:
 	install $(PROG) $(DESTDIR)$(bindir)
