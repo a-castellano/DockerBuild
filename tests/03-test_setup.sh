@@ -45,6 +45,7 @@ tearDown() {
 }
 
 testIsBaseImage() {
+    unset CI_COMMIT_REF_NAME
     IS_BASE_IMAGE=1
     setup
     test -d $BUILD_PATH/timestamp
@@ -54,7 +55,42 @@ testIsBaseImage() {
     check_timestamp_file=$?
     assertEquals "0" "$check_timestamp_file"
     assertEquals "0" "$check_timestamp_file"
+    assertEquals "--network=host --no-cache" "$BUILD_OPTIONS"
+    assertEquals "latest" "$LATEST_TAG_NAME"
 }
+
+testIsuNOTBaseImageNotDateString() {
+
+    unset CI_COMMIT_REF_NAME
+    IS_BASE_IMAGE=0
+    BUILD_PATH=$(pwd)/tests
+    IMAGENAME="base_image_test"
+    setup
+    setupError=$?
+    assertEquals "1" "$setupError"
+}
+
+#testIsuNOTBaseImageNotDateString() {
+#
+#    unset CI_COMMIT_REF_NAME
+#    IS_BASE_IMAGE=0
+#    BUILD_PATH=$(pwd)/tests
+#    IMAGENAME="base_image_test"
+#    setup
+#    setupError=$?
+#    assertEquals "0" "$setupError"
+#}
+
+#testIsuNOTBaseImage() {
+#    unset CI_COMMIT_REF_NAME
+#    IS_BASE_IMAGE=0
+#    mkdir -p $BUILD_PATH/timestamp
+#    DATESTRING=$(date +%Y%m%d%H%M)
+#    echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
+#    setup
+#    setupError=$?
+#    assertEquals "1" "$setupError"
+#}
 
 # Load shUnit2.
 . /usr/bin/shunit2
