@@ -3,21 +3,22 @@ stages:
     - test
     - coverage
     - package
+    - update_repo
 
 linter:
-    image: daedalusproject/base_bash_utils:201904271450
+    image: daedalusproject/base_bash_utils:201904300501
     stage: test
     script:
         - shellcheck --exclude=SC2086 lib/build_docker_image_functions.sh
 
 unit_tests:
-    image: daedalusproject/base_bash_utils:201904271450
+    image: daedalusproject/base_bash_utils:201904300501
     stage: test
     script:
         - make test
 
 cover:
-    image: daedalusproject/base_bash_utils:201904271450
+    image: daedalusproject/base_bash_utils:201904300501
     stage: coverage
     script:
         - make cover
@@ -28,7 +29,7 @@ cover:
         expire_in: 15 minutes
 
 create_deb_package:
-    image: daedalusproject/base_deb_builder:201904271450
+    image: daedalusproject/base_deb_builder:201904300501
     stage: package
     before_script:
         - apt-get update
@@ -41,3 +42,41 @@ create_deb_package:
         paths:
         - package
         expire_in: 15 minutes
+
+upload_package_to_develop_repo:
+    stage: update_repo
+    image: daedalusproject/base_curl:201904300501
+    script:
+        - SNAPSHOTDATE=$(date +%G%m%d%k%M%S)
+        - PACKAGE=$(ls package)
+        - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/daedalus-core-testing || exit 1
+        - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project-testing/file/daedalus-core-testing || exit 1
+        - "curl -X POST -H 'Content-Type: application/json' --data '{\"Name\":\"daedalus-project-testing-'\"$SNAPSHOTDATE\"'\"}' http://repo.daedalus-project.io:8000/api/repos/daedalus-project-testing/snapshots || exit 1"
+        - "curl -X PUT -H 'Content-Type: application/json' --data '{\"Snapshots\": [{\"Component\": \"testing\", \"Name\": \"daedalus-project-testing-'\"$SNAPSHOTDATE\"'\"}]}' http://repo.daedalus-project.io:8000/api/publish/:./bionic || exit 1"
+    artifacts:
+        paths:
+        - package
+        expire_in: 5 minutes
+    dependencies:
+    - create_deb_package
+    only:
+    - develop
+
+upload_package_to_repo:
+    stage: update_repo
+    image: daedalusproject/base_curl:201904300501
+    script:
+        - SNAPSHOTDATE=$(date +%G%m%d%k%M%S)
+        - PACKAGE=$(ls package)
+        - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/daedalus-core || exit 1
+        - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project/file/daedalus-core || exit 1
+        - "curl -X POST -H 'Content-Type: application/json' --data '{\"Name\":\"daedalus-project-'\"$SNAPSHOTDATE\"'\"}' http://repo.daedalus-project.io:8000/api/repos/daedalus-project/snapshots || exit 1"
+        - "curl -X PUT -H 'Content-Type: application/json' --data '{\"Snapshots\": [{\"Component\": \"main\", \"Name\": \"daedalus-project-'\"$SNAPSHOTDATE\"'\"}]}' http://repo.daedalus-project.io:8000/api/publish/:./bionic || exit 1"
+    artifacts:
+        paths:
+        - package
+        expire_in: 15 minutes
+    dependencies:
+    - create_deb_package
+    only:
+    - /^v-.*$/
