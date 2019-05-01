@@ -1,3 +1,9 @@
+daedalus-project-docker-build (0.2-3) RELEASED; urgency=medium
+
+  * Ready for production
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Wed, 01 May 2019 15:40:00 +0200
+
 daedalus-project-docker-build (0.2-2) UNRELEASED; urgency=medium
 
   * Remove some doblequotes
