@@ -1,0 +1,41 @@
+daedalus-project-docker-build (0.2-3) RELEASED; urgency=medium
+
+  * Ready for production
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Wed, 01 May 2019 15:40:00 +0200
+
+daedalus-project-docker-build (0.2-2) UNRELEASED; urgency=medium
+
+  * Remove some doblequotes
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 28 Apr 2019 00:40:36 +0200
+
+daedalus-project-docker-build (0.2-1) UNRELEASED; urgency=medium
+
+  * Env variable usage fixed
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 23:44:36 +0200
+
+daedalus-project-docker-build (0.1-6) UNRELEASED; urgency=medium
+
+  * Docker build options have been fixed
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 23:14:36 +0200
+
+daedalus-project-docker-build (0.1-5) UNRELEASED; urgency=medium
+
+  * New test version
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 22:50:36 +0200
+
+daedalus-project-docker-build (0.1-4) UNRELEASED; urgency=medium
+
+  * Add more debug messages.
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 22:30:36 +0200
+
+daedalus-project-docker-build (0.1-2) UNRELEASED; urgency=medium
+
+  * Initial release.
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 27 Apr 2019 15:09:36 +0200

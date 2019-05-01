@@ -1,0 +1,4 @@
+coverage/*
+clean_lib/*
+daedalus-project-docker-build
+!src/*
