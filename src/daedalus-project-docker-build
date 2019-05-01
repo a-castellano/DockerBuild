@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# ** nextcloud_daedalus-project-docker-build **
+# Utility to create Daedalus Project docker images
+#
+#
+# Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>
+
+source lib/build_docker_image_functions.sh
+
+check_variables
+setup
+
+check_setup=$?
+
+if [[ $check_setup == 1 ]]; then
+
+    exit 1
+else
+    build_image
+    tag_image
+    commit_image
+    clean_images
+fi
