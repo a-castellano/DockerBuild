@@ -36,25 +36,25 @@ function check_variables {
     debug "Initiating check_variables."
 
     debug "Checking Docker Organization variables."
-    if [[ -z ${DOCKER_ORGANIZATION_NAME} ]]; then
+    if [[ -z $DOCKER_ORGANIZATION_NAME ]]; then
         show_error "Docker hub organization name not provided."
         return 1
     fi
 
     debug "Checking maintainer variable."
-    if [[ -z ${DOCKER_IMAGES_MAINTAINER} ]]; then
+    if [[ -z $DOCKER_IMAGES_MAINTAINER ]]; then
         show_error "Image maintainer not provided."
         return 1
     fi
 
     debug "Checking Docker login variables."
 
-    if [[ -z ${DOCKERHUBUSER} ]]; then
+    if [[ -z $DOCKERHUBUSER ]]; then
         show_error "Docker hub user not provided."
         return 1
     fi
 
-    if [[ -z ${DOCKERHUBPASSWORD} ]]; then
+    if [[ -z $DOCKERHUBPASSWORD ]]; then
         show_error "Docker hub password not provided."
         return 1
     fi
@@ -95,7 +95,7 @@ function setup {
             return 1
         fi
 
-        BASEIMAGE=$(grep "ARG BASE_IMAGE=" "$BUILD_PATH/${IMAGENAME}"/Dockerfile |sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
+        BASEIMAGE=$(grep "ARG BASE_IMAGE=" "$BUILD_PATH/$IMAGENAME"/Dockerfile |sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
         debug "Checking if base image value is rightfully set."
         if [[ "$BASEIMAGE" == "" ]]; then
             show_error "Cannot parse BASEIMAGE value."
@@ -128,39 +128,41 @@ function setup {
 
 function build_image {
 
-    docker build "$BUILD_OPTIONS" -t "${IMAGENAME}" -f "${IMAGENAME}"/Dockerfile .
-    docker login --username "${DOCKERHUBUSER}" --password "${DOCKERHUBPASSWORD}"
-    docker create --name="${IMAGENAME}" -i "${IMAGENAME}"
+    debug docker login
+    docker login --username "$DOCKERHUBUSER" --password "$DOCKERHUBPASSWORD"
+    docker build $BUILD_OPTIONS -t "$IMAGENAME" -f "$IMAGENAME/Dockerfile" .
+    debug docker create --name="$IMAGENAME" -i "$IMAGENAME"
+    docker create --name="$IMAGENAME" -i "$IMAGENAME"
 }
 
 function tag_image {
 
-    debug docker tag "${IMAGENAME}" "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":"$LATEST_TAG_NAME"
-    docker tag "${IMAGENAME}" "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":"$LATEST_TAG_NAME"
+    debug docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$LATEST_TAG_NAME"
+    docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$LATEST_TAG_NAME"
 
-    if [ "${BRANCH}" == "master" ]; then
-        debug docker tag "${IMAGENAME}" "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":"${DATESTRING}"
-        docker tag "${IMAGENAME}" "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":"${DATESTRING}"
+    if [ "$BRANCH" == "master" ]; then
+        debug docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
+        docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
     fi
 }
 
 function commit_image {
 
     RELEASEDATE=$(date)
-    debug docker commit -m "$RELEASEDATE" -a "${DOCKER_IMAGES_MAINTAINER}" "${IMAGENAME}" "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}"
-    docker commit -m "$RELEASEDATE" -a "${DOCKER_IMAGES_MAINTAINER}" "${IMAGENAME}" "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}"
-    if [ "${BRANCH}" == "master" ]; then
-        debug docker push "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":"${DATESTRING}"
-        docker push "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":"${DATESTRING}"
+    debug docker commit -m "$RELEASEDATE" -a "$DOCKER_IMAGES_MAINTAINER" "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME"
+    docker commit -m "$RELEASEDATE" -a "$DOCKER_IMAGES_MAINTAINER" "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME"
+    if [[ "$BRANCH" == "master" ]]; then
+        debug docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
+        docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
     fi
-    docker push "${DOCKER_ORGANIZATION_NAME}"/"${IMAGENAME}":latest
+    docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":latest
 }
 
 function clean_images {
-    debug docker stop "${IMAGENAME}"
-    docker stop "${IMAGENAME}"
-    debug docker rm "${IMAGENAME}"
-    docker rm "${IMAGENAME}"
-    debug docker rmi "${IMAGENAME}"
-    docker rmi "${IMAGENAME}"
+    debug docker stop "$IMAGENAME"
+    docker stop "$IMAGENAME"
+    debug docker rm "$IMAGENAME"
+    docker rm "$IMAGENAME"
+    debug docker rmi "$IMAGENAME"
+    docker rmi "$IMAGENAME"
 }
