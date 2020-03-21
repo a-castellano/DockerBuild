@@ -69,7 +69,7 @@ upload_package_to_repo:
         - PACKAGE=$(ls package)
         - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/docker-build || exit 1
         - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project/file/docker-build || exit 1
-        - "curl -X PUT -H 'Content-Type: application/json' --data '{\"Snapshots\": [{\"Component\": \"testing\", \"Name\": \"daedalus-project-testing-'\"$SNAPSHOTDATE\"'\"}]}' http://repo.daedalus-project.io:8000/api/publish/:./bionic || exit 1"
+        - "curl -X PUT -H 'Content-Type: application/json' http://repo.daedalus-project.io:8000/api/publish/:./bionic --data '{}' || exit 1"
     artifacts:
         paths:
         - package
