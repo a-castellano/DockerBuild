@@ -29,7 +29,7 @@ cover:
         expire_in: 15 minutes
 
 create_deb_package:
-    image: daedalusproject/base_deb_builder:201904300501
+    image: daedalusproject/base_deb_builder:latest
     stage: package
     before_script:
         - apt-get update
@@ -49,10 +49,9 @@ upload_package_to_develop_repo:
     script:
         - SNAPSHOTDATE=$(date +%G%m%d%k%M%S)
         - PACKAGE=$(ls package)
-        - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/daedalus-core-testing || exit 1
-        - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project-testing/file/daedalus-core-testing || exit 1
-        - "curl -X POST -H 'Content-Type: application/json' --data '{\"Name\":\"daedalus-project-testing-'\"$SNAPSHOTDATE\"'\"}' http://repo.daedalus-project.io:8000/api/repos/daedalus-project-testing/snapshots || exit 1"
-        - "curl -X PUT -H 'Content-Type: application/json' --data '{\"Snapshots\": [{\"Component\": \"testing\", \"Name\": \"daedalus-project-testing-'\"$SNAPSHOTDATE\"'\"}]}' http://repo.daedalus-project.io:8000/api/publish/:./bionic || exit 1"
+        - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/docker-build-testing || exit 1
+        - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project-testing/file/docker-build-testing || exit 1
+        - "curl -X PUT -H 'Content-Type: application/json' http://repo.daedalus-project.io:8000/api/publish/:./bionic --data '{}' || exit 1"
     artifacts:
         paths:
         - package
@@ -68,10 +67,9 @@ upload_package_to_repo:
     script:
         - SNAPSHOTDATE=$(date +%G%m%d%k%M%S)
         - PACKAGE=$(ls package)
-        - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/daedalus-core || exit 1
-        - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project/file/daedalus-core || exit 1
-        - "curl -X POST -H 'Content-Type: application/json' --data '{\"Name\":\"daedalus-project-'\"$SNAPSHOTDATE\"'\"}' http://repo.daedalus-project.io:8000/api/repos/daedalus-project/snapshots || exit 1"
-        - "curl -X PUT -H 'Content-Type: application/json' --data '{\"Snapshots\": [{\"Component\": \"main\", \"Name\": \"daedalus-project-'\"$SNAPSHOTDATE\"'\"}]}' http://repo.daedalus-project.io:8000/api/publish/:./bionic || exit 1"
+        - curl -X POST -F file=@package/$PACKAGE http://repo.daedalus-project.io:8000/api/files/docker-build || exit 1
+        - curl -X POST http://repo.daedalus-project.io:8000/api/repos/daedalus-project/file/docker-build || exit 1
+        - "curl -X PUT -H 'Content-Type: application/json' --data '{\"Snapshots\": [{\"Component\": \"testing\", \"Name\": \"daedalus-project-testing-'\"$SNAPSHOTDATE\"'\"}]}' http://repo.daedalus-project.io:8000/api/publish/:./bionic || exit 1"
     artifacts:
         paths:
         - package
