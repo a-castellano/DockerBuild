@@ -13,19 +13,19 @@
 source lib/build_docker_image_functions.sh
 
 TearDown() {
-    unset DEBUG
+	unset DEBUG
 }
 
 testDebugNoMessage() {
-    no_menssage=$(debug "This is a test")
-    assertEquals "" "$no_menssage" #If debug options is not enabled no message is printed
+	no_menssage=$(debug "This is a test")
+	assertEquals "" "$no_menssage" #If debug options is not enabled no message is printed
 }
 
 testDebugWithMessage() {
-    DEBUG=1
-    expectedMessage="This is a test"
-    menssage=$(debug "$expectedMessage")
-    assertSame "$expectedMessage" "$menssage" #If debug options is  enabled message is printed
+	DEBUG=1
+	expectedMessage="This is a test"
+	menssage=$(debug "$expectedMessage")
+	assertSame "$expectedMessage" "$menssage" #If debug options is  enabled message is printed
 }
 
 # Load shUnit2.
