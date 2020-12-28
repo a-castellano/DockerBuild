@@ -1,11 +1,11 @@
 #!/bin/bash -
 #===============================================================================
 #
-#          FILE: build_docker_image__functions
+#          FILE: build_docker_image_functions.sh
 # 
 #         USAGE: source lib/build_docker_image
 # 
-#   DESCRIPTION: Build docker images following Daedalus Project Limani original behaviour.
+#   DESCRIPTION: Build docker images.
 # 
 #       OPTIONS: ---
 #  REQUIREMENTS: docker
@@ -13,8 +13,8 @@
 #         NOTES: ---
 #        AUTHOR: Álvaro Castellano Vela (alvaro.castellano.vela@gmail.com)
 #  ORGANIZATION: Daedalus Project
-#       CREATED: 04/24/2019 06:59
-#      REVISION: 0.1
+#       CREATED: 24/04/2019 06:59
+#      REVISION: 0.2
 #===============================================================================
 
 # Functions
@@ -35,10 +35,17 @@ function check_variables {
 
     debug "Initiating check_variables."
 
+    debug "Cheking first if registry URL has been set."
+
+    if [[ -z $DOCKER_REGISTRY_URL ]]; then
+        debug "DOCKER_REGISTRY_URL variable has not been set, asuming Dokcer Hub as registry."
+
     debug "Checking Docker Organization variables."
     if [[ -z $DOCKER_ORGANIZATION_NAME ]]; then
         show_error "Docker hub organization name not provided."
         return 1
+    fi
+
     fi
 
     debug "Checking maintainer variable."
@@ -49,13 +56,13 @@ function check_variables {
 
     debug "Checking Docker login variables."
 
-    if [[ -z $DOCKERHUBUSER ]]; then
-        show_error "Docker hub user not provided."
+    if [[ -z $DOCKERREGISTRYUSER ]]; then
+        show_error "Registry user not provided."
         return 1
     fi
 
-    if [[ -z $DOCKERHUBPASSWORD ]]; then
-        show_error "Docker hub password not provided."
+    if [[ -z $DOCKERREGISTRYPASSWORD ]]; then
+        show_error "Registry user password not provided."
         return 1
     fi
 
