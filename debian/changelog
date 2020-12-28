@@ -1,6 +1,13 @@
+docker-build (0.4-1) RELEASED; urgency=medium
+
+  * Change Pakcage name
+  * Allow the use of registry servers different form Docker Hub
+
+ -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Mon, 28 Dec 2020 12:28:00 +0100
+
 daedalus-project-docker-build (0.2-4) RELEASED; urgency=medium
 
-  * Miox fixes in CI
+  * Minor fixes in CI
 
  -- Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>  Sun, 21 Feb 2020 11:13:00 +0100
 

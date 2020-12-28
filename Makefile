@@ -1,4 +1,4 @@
-PROG=daedalus-project-docker-build
+PROG=docker-build
 
 prefix = /usr/local
 bindir = $(prefix)/bin
