@@ -24,19 +24,19 @@ oneTearDown() {
 setUp(){
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
-    DOCKERHUBUSER="alvaro.castellano.vela"
-    DOCKERHUBPASSWORD="mypassword"
+    DOCKER_REGISTRY_USER="alvaro.castellano.vela"
+    DOCKER_REGISTRY_PASSWORD="mypassword"
     BUILD_PATH="$TMP_FOLDER"
-    IMAGENAME="testimage"
+    IMAGE_NAME="testimage"
     check_variables
 }
 
 tearDown() {
     unset DOCKER_ORGANIZATION_NAME
     unset DOCKER_IMAGES_MAINTAINER
-    unset DOCKERHUBUSER
-    unset DOCKERHUBPASSWORD
-    unset IMAGENAME
+    unset DOCKER_REGISTRY_USER
+    unset DOCKER_REGISTRY_PASSWORD
+    unset IMAGE_NAME
     unset BUILD_PATH
     unset BUILD_OPTIONS
     unset LATEST_TAG_NAME
@@ -64,11 +64,11 @@ testIsuNOTBaseImageNotDateString() {
     unset CI_COMMIT_REF_NAME
     IS_BASE_IMAGE=0
     BUILD_PATH=$(pwd)/tests
-    IMAGENAME="base_image_test"
+    IMAGE_NAME="base_image_test"
     setup 2> /dev/null
     setupError=$?
     assertEquals "1" "$setupError"
-    #There is not timestampfile so IMAGENAME is not set
+    #There is not timestampfile so IMAGE_NAME is not set
 }
 
 testIsuNOTBaseImage() {
@@ -78,7 +78,7 @@ testIsuNOTBaseImage() {
     mkdir -p $BUILD_PATH/timestamp
     DATESTRING=$(date +%Y%m%d%H%M)
     echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
-    IMAGENAME="base_image_test"
+    IMAGE_NAME="base_image_test"
     setup
     setupError=$?
     assertEquals "0" "$setupError"
@@ -91,11 +91,11 @@ testIsuNOTBaseImageFailedToGetBaseImage() {
     mkdir -p $BUILD_PATH/timestamp
     DATESTRING=$(date +%Y%m%d%H%M)
     echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
-    IMAGENAME="nonexistent"
+    IMAGE_NAME="nonexistent"
     setup 2> /dev/null
     setupError=$?
     assertEquals "1" "$setupError"
-    #There is not dockerfile so IMAGENAME is not set
+    #There is not dockerfile so IMAGE_NAME is not set
 }
 
 testCI_COMMIT_REF_NAME() {
@@ -105,7 +105,7 @@ testCI_COMMIT_REF_NAME() {
     mkdir -p $BUILD_PATH/timestamp
     DATESTRING=$(date +%Y%m%d%H%M)
     echo "$DATESTRING" > $BUILD_PATH/timestamp/timestampfile
-    IMAGENAME="base_image_test"
+    IMAGE_NAME="base_image_test"
     setup
     setupError=$?
     assertEquals "0" "$setupError"

@@ -54,20 +54,20 @@ function check_variables {
 
 	debug "Checking Docker login variables."
 
-	if [[ -z $DOCKERREGISTRYUSER ]]; then
+	if [[ -z $DOCKER_REGISTRY_USER ]]; then
 		show_error "Registry user not provided."
 		return 1
 	fi
 
-	if [[ -z $DOCKERREGISTRYPASSWORD ]]; then
+	if [[ -z $DOCKER_REGISTRY_PASSWORD ]]; then
 		show_error "Registry user password not provided."
 		return 1
 	fi
 
-	debug "Checking IMAGENAME variable."
-	if [[ -z $IMAGENAME ]]; then
+	debug "Checking IMAGE_NAME variable."
+	if [[ -z $IMAGE_NAME ]]; then
 
-		show_error "IMAGENAME env variable is not set."
+		show_error "IMAGE_NAME env variable is not set."
 		return 1
 	fi
 
@@ -99,7 +99,7 @@ function setup {
 			return 1
 		fi
 
-		BASEIMAGE=$(grep "ARG BASE_IMAGE=" "$BUILD_PATH/$IMAGENAME"/Dockerfile | sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
+		BASEIMAGE=$(grep "ARG BASE_IMAGE=" "$BUILD_PATH/$IMAGE_NAME"/Dockerfile | sed 's/:.*//' | sed 's/ARG BASE_IMAGE=//')
 		debug "Checking if base image value is rightfully set."
 		if [[ "$BASEIMAGE" == "" ]]; then
 			show_error "Cannot parse BASEIMAGE value."
@@ -133,40 +133,40 @@ function setup {
 function build_image {
 
 	debug docker login
-	docker login --username "$DOCKERHUBUSER" --password "$DOCKERHUBPASSWORD"
-	docker build $BUILD_OPTIONS -t "$IMAGENAME" -f "$IMAGENAME/Dockerfile" .
-	debug docker create --name="$IMAGENAME" -i "$IMAGENAME"
-	docker create --name="$IMAGENAME" -i "$IMAGENAME"
+	docker login --username "$DOCKER_REGISTRY_USER" --password "$DOCKER_REGISTRY_PASSWORD"
+	docker build $BUILD_OPTIONS -t "$IMAGE_NAME" -f "$IMAGE_NAME/Dockerfile" .
+	debug docker create --name="$IMAGE_NAME" -i "$IMAGE_NAME"
+	docker create --name="$IMAGE_NAME" -i "$IMAGE_NAME"
 }
 
 function tag_image {
 
-	debug docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$LATEST_TAG_NAME"
-	docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$LATEST_TAG_NAME"
+	debug docker tag "$IMAGE_NAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":"$LATEST_TAG_NAME"
+	docker tag "$IMAGE_NAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":"$LATEST_TAG_NAME"
 
 	if [ "$BRANCH" == "master" ]; then
-		debug docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
-		docker tag "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
+		debug docker tag "$IMAGE_NAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":"$DATESTRING"
+		docker tag "$IMAGE_NAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":"$DATESTRING"
 	fi
 }
 
 function commit_image {
 
 	RELEASEDATE=$(date)
-	debug docker commit -m "$RELEASEDATE" -a "$DOCKER_IMAGES_MAINTAINER" "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME"
-	docker commit -m "$RELEASEDATE" -a "$DOCKER_IMAGES_MAINTAINER" "$IMAGENAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME"
+	debug docker commit -m "$RELEASEDATE" -a "$DOCKER_IMAGES_MAINTAINER" "$IMAGE_NAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME"
+	docker commit -m "$RELEASEDATE" -a "$DOCKER_IMAGES_MAINTAINER" "$IMAGE_NAME" "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME"
 	if [[ "$BRANCH" == "master" ]]; then
-		debug docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
-		docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":"$DATESTRING"
+		debug docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":"$DATESTRING"
+		docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":"$DATESTRING"
 	fi
-	docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGENAME":latest
+	docker push "$DOCKER_ORGANIZATION_NAME"/"$IMAGE_NAME":latest
 }
 
 function clean_images {
-	debug docker stop "$IMAGENAME"
-	docker stop "$IMAGENAME"
-	debug docker rm "$IMAGENAME"
-	docker rm "$IMAGENAME"
-	debug docker rmi "$IMAGENAME"
-	docker rmi "$IMAGENAME"
+	debug docker stop "$IMAGE_NAME"
+	docker stop "$IMAGE_NAME"
+	debug docker rm "$IMAGE_NAME"
+	docker rm "$IMAGE_NAME"
+	debug docker rmi "$IMAGE_NAME"
+	docker rmi "$IMAGE_NAME"
 }

@@ -20,9 +20,9 @@ oneTimeSetUp() {
 tearDown() {
     unset DOCKER_ORGANIZATION_NAME
     unset DOCKER_IMAGES_MAINTAINER
-    unset DOCKERHUBUSER
-    unset DOCKERHUBPASSWORD
-    unset IMAGENAME
+    unset DOCKER_REGISTRY_USER
+    unset DOCKER_REGISTRY_PASSWORD
+    unset IMAGE_NAME
     unset BUILD_PATH
 }
 
@@ -35,7 +35,7 @@ testNoVariables() {
 }
 
 testOnlyImagename() {
-    IMAGENAME="SomeImage"
+    IMAGE_NAME="SomeImage"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
@@ -61,45 +61,45 @@ testWithDOCKER_IMAGES_MAINTAINER() {
     assertEquals "Docker hub organization name not provided." "$check_variables_message"
 }
 
-testWithoutDOCKERHUBUSER() {
+testWithoutDOCKER_REGISTRY_USER() {
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
     assertEquals "1" "$check_variables_status"
-    assertEquals "Docker hub user not provided." "$check_variables_message"
+    assertEquals "Registry user not provided." "$check_variables_message"
 }
 
-testWithoutDOCKERHUBPASSWORD() {
+testWithoutDOCKER_REGISTRY_PASSWORD() {
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
-    DOCKERHUBUSER="myuser"
+    DOCKER_REGISTRY_USER="myuser"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
     assertEquals "1" "$check_variables_status"
-    assertEquals "Docker hub password not provided." "$check_variables_message"
+    assertEquals "Registry user password not provided." "$check_variables_message"
 }
 
-testWithoutIMAGENAME() {
+testWithoutIMAGE_NAME() {
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
-    DOCKERHUBUSER="myuser"
-    DOCKERHUBPASSWORD="somepassword"
+    DOCKER_REGISTRY_USER="myuser"
+    DOCKER_REGISTRY_PASSWORD="somepassword"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
     assertEquals "1" "$check_variables_status"
-    assertEquals "IMAGENAME env variable is not set." "$check_variables_message"
+    assertEquals "IMAGE_NAME env variable is not set." "$check_variables_message"
 }
 
 testAllVariablesSet() {
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
-    DOCKERHUBUSER="myuser"
-    DOCKERHUBPASSWORD="somepassword"
-    IMAGENAME="SomeImage"
+    DOCKER_REGISTRY_USER="myuser"
+    DOCKER_REGISTRY_PASSWORD="somepassword"
+    IMAGE_NAME="SomeImage"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
@@ -110,9 +110,9 @@ testAllVariablesSet() {
 testBUILD_PATH_unset() {
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
-    DOCKERHUBUSER="myuser"
-    DOCKERHUBPASSWORD="somepassword"
-    IMAGENAME="SomeImage"
+    DOCKER_REGISTRY_USER="myuser"
+    DOCKER_REGISTRY_PASSWORD="somepassword"
+    IMAGE_NAME="SomeImage"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
     check_variables_message=$(cat $TMP_FOLDER/testNoVariables)
@@ -123,9 +123,9 @@ testBUILD_PATH_unset() {
 testBUILD_PATH_set() {
     DOCKER_ORGANIZATION_NAME="daedalusproject"
     DOCKER_IMAGES_MAINTAINER="Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>"
-    DOCKERHUBUSER="myuser"
-    DOCKERHUBPASSWORD="somepassword"
-    IMAGENAME="SomeImage"
+    DOCKER_REGISTRY_USER="myuser"
+    DOCKER_REGISTRY_PASSWORD="somepassword"
+    IMAGE_NAME="SomeImage"
     BUILD_PATH="path"
     check_variables 2> $TMP_FOLDER/testNoVariables
     check_variables_status=$?
