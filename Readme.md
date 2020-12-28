@@ -40,6 +40,10 @@ The following environment variables must be set in order to make this tool work:
 * **IMAGE_NAME** - specifies the name of the image that this toll is creating. 
 * **IS_BASE_IMAGE** - specifies is the image we want to create is a base image (see below)
 
+Default registry is docker.io, when de default registry is being used the variable **DOCKER_ORGANIZATION_NAME** must be set, it can contain a user name instead of organizacion.
+
+In order to use differente registry it mus be defined using variable **DOCKER_REGISTRY_URL**.
+
 **docker-build** will look for a folder named as **IMAGE_NAME** value containing a valid Dockerfile.
 ```bash
 export DOCKER_ORGANIZATION_NAME="acastellano"
@@ -51,3 +55,7 @@ export IS_BASE_IMAGE=1
 
 ```
 [![asciicast](https://asciinema.org/a/381553.svg)](https://asciinema.org/a/381553?speed=2)
+
+## Base images
+
+When [Limani](https://git.wind  ddmaker.net/a-castellano/limani) CI/CD creates docker images during master deploy, all docker images must use the same tag, base images generate a timestamp, non base images read that timetamps and will use it in order to generate the same tag as base image.

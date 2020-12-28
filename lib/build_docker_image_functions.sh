@@ -130,10 +130,10 @@ function setup {
 
 }
 
-function rename_image {
+function rename_organization {
 
 	if [[ ! -z ${DOCKER_REGISTRY_URL} ]]; then
-		IMAGE_NAME="${DOCKER_REGISTRY_URL}/${IMAGE_NAME}"
+		DOCKER_ORGANIZATION_NAME="${DOCKER_REGISTRY_URL}"
 	fi
 }
 

@@ -46,16 +46,16 @@ tearDown() {
 }
 
 testImageChangesNameWhenUsingDokcerRegistry() {
-	IMAGE_NAME="test"
-	rename_image
-	assertEquals "registry.windmaker.net:5005/a-castellano/Docker-Build/test" "$IMAGE_NAME"
+	DOCKER_ORGANIZATION_NAME="testorganization"
+	rename_organization
+	assertEquals "registry.windmaker.net:5005/a-castellano/Docker-Build" "$DOCKER_ORGANIZATION_NAME"
 }
 
 testImageChangesNameWhenNotUsingDokcerRegistry() {
 	unset DOCKER_REGISTRY_URL
-	IMAGE_NAME="test2"
-	rename_image
-	assertEquals "test2" "$IMAGE_NAME"
+	DOCKER_ORGANIZATION_NAME="test2"
+	rename_organization
+	assertEquals "test2" "$DOCKER_ORGANIZATION_NAME"
 }
 
 # Load shUnit2.
