@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Utility to create docker images
+#
+#
+# Álvaro Castellano Vela <alvaro.castellano.vela@gmail.com>
+
+source lib/build_docker_image_functions.sh
+
+check_variables
+check_variables=$?
+
+if [[ $check_variables == 1 ]]; then
+
+	exit 1
+else
+	setup
+
+	check_setup=$?
+
+	if [[ $check_setup == 1 ]]; then
+
+		exit 1
+	else
+		rename_organization
+		build_image
+		tag_image
+		commit_image
+		clean_images
+	fi
+fi

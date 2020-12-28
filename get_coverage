@@ -2,11 +2,11 @@
 #===============================================================================
 #
 #          FILE: get_coverage
-# 
+#
 #         USAGE: get_coverage.sh TEST_FOLDER
-# 
+#
 #   DESCRIPTION: Calculates coverage
-# 
+#
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
 #          BUGS: ---
@@ -17,15 +17,14 @@
 #      REVISION: 0.1
 #===============================================================================
 
-set -o nounset                              # Treat unset variables as an error
+set -o nounset # Treat unset variables as an error
 
 TEST_FOLDER=$1
 
 COVERAGE="0%"
 
-for testfile in $(ls $TEST_FOLDER/*-test_*.sh)
-do
-    COVERAGE=$(bashcov -- $testfile | tail -n 1 | grep -oh "[0-9]\+\.[0-9]*%")
+for testfile in $(ls $TEST_FOLDER/*-test_*.sh); do
+	COVERAGE=$(bashcov -- $testfile | tail -n 1 | grep -oh "[0-9]\+\.[0-9]*%")
 done
 
 echo "Coverage: $COVERAGE"

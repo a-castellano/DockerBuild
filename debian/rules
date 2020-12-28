@@ -3,6 +3,6 @@
 	dh $@
 
 override_dh_auto_install:
-	$(MAKE) DESTDIR=$$(pwd)/debian/daedalus-project-docker-build prefix=/usr install
+	$(MAKE) DESTDIR=$$(pwd)/debian/docker-build prefix=/usr install
 override_dh_auto_test:
 	$(MAKE) TEST_DIR=$$(pwd)/tests test
