@@ -22,6 +22,7 @@ else
 
 		exit 1
 	else
+		rename_image
 		build_image
 		tag_image
 		commit_image

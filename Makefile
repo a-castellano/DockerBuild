@@ -18,6 +18,8 @@ test:
 	( $(TEST_DIR)/02-test_variables.sh )
 	@echo "- setup"
 	( $(TEST_DIR)/03-test_setup.sh )
+	@echo "- image renaming"
+	( $(TEST_DIR)/04-test_image_name.sh )
 
 cover:
 	./get_coverage tests

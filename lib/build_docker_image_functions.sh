@@ -130,10 +130,18 @@ function setup {
 
 }
 
+function rename_image {
+
+	if [[ ! -z ${DOCKER_REGISTRY_URL} ]]; then
+		IMAGE_NAME="${DOCKER_REGISTRY_URL}/${IMAGE_NAME}"
+	fi
+}
+
 function build_image {
 
 	debug "docker login"
 	docker login --username "${DOCKER_REGISTRY_USER}" --password "${DOCKER_REGISTRY_PASSWORD}" ${DOCKER_REGISTRY_URL}
+
 	docker build ${BUILD_OPTIONS} -t "${IMAGE_NAME}" -f "${IMAGE_NAME}/Dockerfile" .
 	debug docker create --name="${IMAGE_NAME}" -i "${IMAGE_NAME}"
 	docker create --name="${IMAGE_NAME}" -i "${IMAGE_NAME}"

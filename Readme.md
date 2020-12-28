@@ -50,4 +50,4 @@ export IMAGE_NAME="test"
 export IS_BASE_IMAGE=1
 
 ```
-
+[![asciicast](https://asciinema.org/a/381553.svg)](https://asciinema.org/a/381553?speed=2)
