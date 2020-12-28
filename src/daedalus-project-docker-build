@@ -15,10 +15,10 @@ check_setup=$?
 
 if [[ $check_setup == 1 ]]; then
 
-    exit 1
+	exit 1
 else
-    build_image
-    tag_image
-    commit_image
-    clean_images
+	build_image
+	tag_image
+	commit_image
+	clean_images
 fi
