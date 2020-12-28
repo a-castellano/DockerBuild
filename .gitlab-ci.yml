@@ -37,7 +37,7 @@ create_deb_package:
     script:
         - dpkg-buildpackage -uc -b
         - mkdir package
-        - mv ../daedalus-project-docker-build*.deb package/
+        - mv ../docker-build*.deb package/
     artifacts:
         paths:
         - package
