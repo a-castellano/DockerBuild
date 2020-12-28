@@ -39,7 +39,6 @@ function check_variables {
 
 	if [[ -z $DOCKER_REGISTRY_URL ]]; then
 		debug "DOCKER_REGISTRY_URL variable has not been set, asuming Dokcer Hub as registry."
-		REGISTRY_OPTIONS=""
 		debug "Checking Docker Organization variables."
 		if [[ -z $DOCKER_ORGANIZATION_NAME ]]; then
 			show_error "Docker hub organization name not provided."
