@@ -23,8 +23,8 @@ sudo make install
 Add packages.windmaker.net repo:
 ```bash
 apt-get install -y gnupg ca-certificates wget
-wget -O - http://repo.daedalus-project.io/repo.daedalus-project.io.gpg-key.pub | sudo apt-key add - 
-echo "deb [arch=amd64] http://repo.daedalus-project.io/ focal main" >> /etc/apt/sources.list
+wget -O - http://packages.windmaker.net/WINDMAKER-GPG-KEY.pub | sudo apt-key add - 
+echo "deb [arch=amd64] http://packages.windmaker.net/ focal main" >> /etc/apt/sources.list 
 apt-get update
 apt-get install docker-build
 ```
